@@ -1,30 +1,73 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <div class="button" @click="create">点击我创建一个</div>
   </div>
-  <router-view />
+  <ul>
+    <li v-for="(item, index) in list" :key="item.key">
+      <div class="text" @click="remove(index)">close</div>
+      <MicroContainer :base="item" />
+    </li>
+  </ul>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
+import MicroContainer from '@/qk-compose/micro-container.vue'
+import { genNonDuplicateId } from '@/utils/gen-non-duplicateId'
+
+interface Node {
+  key: string
+  microName: string
+  data?: string
 }
 
-#nav {
-  padding: 30px;
-}
+export default defineComponent({
+  name: 'App',
+  components: { MicroContainer },
+  setup() {
+    const list: Node[] = reactive([])
+    const create = () => {
+      list.push({
+        key: genNonDuplicateId(20),
+        microName: 'pro_lowcode_flow_front',
+        data: `hello ${genNonDuplicateId(8)}`,
+      })
+    }
+    const remove = (index: number) => {
+      list.splice(index, 1)
+    }
+    return {
+      list,
+      create,
+      remove,
+    }
+  },
+})
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+<style lang="less" scoped>
+body * {
+  box-sizing: border-box;
 }
+.button {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: 1px solid #ececec;
+}
+.text {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+  li {
+    width: 300px;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: red;
+  }
 }
 </style>
