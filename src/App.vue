@@ -66,7 +66,7 @@ ul {
   li {
     width: 300px;
     padding: 10px;
-    margin-right: 20px;
+    margin: 20px;
     background-color: red;
   }
 }

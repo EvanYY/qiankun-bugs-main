@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <title><%= htmlWebpackPlugin.options.title %></title>
+  <!-- 
+    第三方库  monaco 代码编辑器 体量过大 16m以上 目前 通过 CDN 外部引入 
+
+    问题： 注释后 可以正常加载 子应用 localhost:5555  
+          一旦打开 script src="<%= VUE_APP_CDN_PATH %>monaco-editor/min/vs/loader.js"></script
+          则主应用捕获监听不到 子应用的 生命周期 报错   子应用可以正常加载进来 并生成dom节点
+   -->
+
   <!-- <script src="<%= VUE_APP_CDN_PATH %>monaco-editor/min/vs/loader.js"></script> -->
   <!-- <script>
     const CDN_PATH = '<%= VUE_APP_CDN_PATH %>'
